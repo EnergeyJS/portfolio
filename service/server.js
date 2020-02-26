@@ -11,6 +11,7 @@ const request = require('request');
 const mongoose = require('mongoose');
 // require router
 const userRoute = require('./routes/userRoute');
+const authRoute = require('./src/api/auth/auth.route');
 const serviceRoute = require('./routes/serviceRoute');
 const teamRoute = require('./routes/teamMemberRoute');
 // import database file
@@ -34,6 +35,8 @@ app.use((req, res, next) => {
 })()
 // get all data
 app.use('/api/users', userRoute);
+// get all data
+app.use('/api/auth', authRoute);
 app.use('/api/services', serviceRoute);
 app.use('/api/team', teamRoute);
 app.use('/image', express.static(path.join(__dirname, 'public')))
