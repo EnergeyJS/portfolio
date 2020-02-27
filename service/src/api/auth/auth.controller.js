@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 // const httpStatus = require('http-status')
 
-// const JWToken = require('../../libs/jwToken')
+const JWToken = require('../../libs/jwtToken')
 // const APIError = require('../../libs/APIError')
 const User = require('../user/user.model')
 
@@ -13,11 +13,12 @@ const User = require('../user/user.model')
  */
 async function login (req, res, next) {
   try {
-    const user = await User.get({ username: req.body.username })
+    const user = await User.get({ email: req.body.email })
     if (bcrypt.compareSync(req.body.password, user.password)) {
       const payload = {
         username: user.username,
-        mobileNumber: user.mobileNumber
+        email: user.email,
+        role: user.role,
       }
       const token = JWToken.create(payload, '20m')
       return res.json({
@@ -25,7 +26,8 @@ async function login (req, res, next) {
         user: {
           _id: user._id,
           username: user.username,
-          mobileNumber: user.mobileNumber
+          email: user.email,
+          role: user.role,
         }
       })
     }

@@ -1,7 +1,5 @@
 const Promise = require('bluebird')
 const mongoose = require('mongoose')
-const httpStatus = require('http-status')
-const APIError = require('../../libs/APIError')
 
 /**
  * User Schema
@@ -9,18 +7,29 @@ const APIError = require('../../libs/APIError')
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
-    index: {
-      unique: true
-    }
+    required: true,    
+    unique: true    
   },
   email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  name: {
     type: String,
     required: true
   },
   password: {
     type: String,
     required: true
+  },
+  role: {
+    type: String,
+    default: '2'
+  },
+  check: {
+    type: Boolean,
+    default: false
   },
 },
 { timestamps: true }
