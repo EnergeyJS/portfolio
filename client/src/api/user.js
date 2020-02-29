@@ -1,3 +1,3 @@
 import axios from "axios";
 // create user
-export const createUser = async ({ name, age }) => await axios.post('http://localhost:5050/api/users', { name, age });
+export const createUser = async ({ username, name, email, password, check }) => await axios.post('http://localhost:5050/api/user', { username, name, email, password, check });

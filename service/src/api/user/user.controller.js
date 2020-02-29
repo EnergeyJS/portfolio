@@ -34,8 +34,17 @@ async function create (req, res, next) {
     }
   }
 
+  async function list(req, res, next){
+    try {
+      return res.json(await User.list())
+    } catch (error) {
+      
+    }
+  }
+
   module.exports = {
     // load,
     create,
     get,
+    list,
   }

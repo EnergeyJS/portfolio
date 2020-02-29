@@ -9,6 +9,7 @@ const router = Router()
 
 router.route('/')
   .post(validate(userParam.create), userCtrl.create)
+  .get(validate(userParam.list), userCtrl.list)
 
   router.route('/:userId')
   .get(
