@@ -79,6 +79,13 @@ class Header extends Component {
                                 <NavLink className="link-item" to={`${process.env.PUBLIC_URL}/login`}>Login</NavLink>
                             </li>
 
+                            <li className="nav-item">
+                                <button className="link-item" onClick={()=>{
+                                    localStorage.removeItem('authToken');
+                                    window.location.href = "/login";
+                                }}>Logout</button>
+                            </li>
+
 
                         </ul>
                     </div>

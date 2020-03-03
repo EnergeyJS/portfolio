@@ -31,7 +31,7 @@ async function login (req, res, next) {
         }
       })
     }
-    // throw new APIError('Authentication error!', httpStatus.UNAUTHORIZED, true)
+    throw Error('Email or password doesn\'t match')
   } catch (e) {
     next(e)
   }

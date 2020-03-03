@@ -7,9 +7,6 @@ import {
   } from '../actions/types';
   
   const initialState = {
-    list: [],
-    cart: [],
-    name_age: {},
     user: {}
   };
   
