@@ -6,6 +6,10 @@ import {
   } from '../../actions/dummyAction';
 
   import {
+    login,
+  } from '../../actions/authAction';
+
+  import {
     ADD_NAME_AGE,
   } from '../../actions/types';
 
@@ -15,7 +19,8 @@ export const Login = () =>  {
 
     const addingToCart = (event) => {
         event.preventDefault();
-        dispatch({type: ADD_NAME_AGE, payload: {name: 'Joyonto',age: 24}});
+        login(dispatch, { email :"omuk@tomuk.com", password :"123456"});
+        // dispatch({type: ADD_NAME_AGE, payload: {name: 'Joyonto',age: 24}});
         // dispatch(storeNameAge({name: 'Joyonto',age: 24}));
       };
 

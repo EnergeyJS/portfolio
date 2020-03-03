@@ -2,13 +2,15 @@ import {
     GET_DUMMY_DATA,
     FILTER_DUMMY_DATA,
     CART_DATA,
-    ADD_NAME_AGE
+    ADD_NAME_AGE,
+    LOGIN
   } from '../actions/types';
   
   const initialState = {
     list: [],
     cart: [],
     name_age: {},
+    user: {}
   };
   
   export default (state = initialState, action) => {
@@ -23,6 +25,8 @@ import {
         return { ...state, list: action.payload };
     case ADD_NAME_AGE:
             return { ...state, name_age: action.payload };
+    case LOGIN:
+          return { ...state, user: action.payload };
       default:
         return state;
     }
