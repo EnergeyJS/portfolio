@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import jwt_decode from "jwt-decode";
 import store from './root.store';
 
@@ -51,8 +51,7 @@ if (localStorage[AUTH_TOKEN]) {
   // Check for expired Token
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
-    store.dispatch(logoutUser());
-    window.location.href = "/";
+    logoutUser(store.dispatch)
   }
 }
 

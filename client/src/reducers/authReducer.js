@@ -13,7 +13,7 @@ import {
     case LOGIN:
           return { 
             ...state,
-            isAuthenticated: !isEmpty(action.payload),
+              isAuthenticated: !isEmpty(action.payload),
              user: action.payload 
             };
       default:

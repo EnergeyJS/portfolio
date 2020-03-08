@@ -1,46 +1,17 @@
 // import package and project file
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
+import { logoutUser } from '../actions/authAction';
 import $ from "jquery";
 import 'font-awesome/css/font-awesome.min.css';
-class Header extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            scrollingLock: false
-        };
-    }
-    componentDidMount() {
-        if ($(window).width() <= 991) {
-            $("#mainMenu .nav-link").click(function () {
-                $(".navbar-collapse").slideToggle("slow");
-            });
-            $("#mainMenu .navbar-toggler").click(function () {
+import { useDispatch, useSelector } from 'react-redux';
 
-                $(".navbar-collapse").slideToggle("slow");
-            });
+const Header = () => {
 
-            $("ul#main-menu li a").click(function () {
-                $(".navbar-collapse").slideToggle("slow");
-            });
+    const dispatch = useDispatch();
+    const history = useHistory();
 
-            $("ul.menu-button li a").click(function () {
-                $(".navbar-collapse").slideToggle("slow");
-            });
-        }
-        // sticky header
-        var header = $('.header-area'),
-            win = $(window);
-        win.on('scroll', function () {
-            var scroll = win.scrollTop();
-            if (scroll < 120) {
-                header.removeClass("sticky");
-            } else {
-                header.addClass("sticky");
-            }
-        });
-    }
-    render() {
+
         return (
             <nav id="mainMenu" className="navbar bg-dark  navbar-expand-lg navbar-light header-area">
                 <div className="container">
@@ -81,8 +52,7 @@ class Header extends Component {
 
                             <li className="nav-item">
                                 <button className="link-item" onClick={()=>{
-                                    localStorage.removeItem('authToken');
-                                    window.location.href = "/login";
+                                    logoutUser(dispatch, history);
                                 }}>Logout</button>
                             </li>
 
@@ -92,6 +62,6 @@ class Header extends Component {
                 </div>
             </nav>
         );
-    }
+    
 }
 export default Header;

@@ -23,7 +23,7 @@ export const Login = () =>  {
 
     const loginSubmit = (event) => {
         event.preventDefault();
-        login(dispatch, { email, password});
+        login(dispatch, { email, password}, history);
       };
 
         return (

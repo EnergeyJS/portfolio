@@ -6,14 +6,15 @@ import {
 
 import setAuthToken from '../utils/setAuthToken';
 
-export const login = async(dispatch, {email, password}) => {
+
+export const login = async(dispatch, {email, password}, history) => {
     try {
         const response = await axios.post('/api/auth/login', {email, password});
         const { data : {user, token} } = response;
         localStorage.setItem(AUTH_TOKEN, token);
         dispatch(setCurrentUser(user));
-        window.location.href = "/";
-    } catch (error) {
+        history && history.push('/');
+      } catch (error) {
         console.log(error);
     }
   };
@@ -25,11 +26,13 @@ export const setCurrentUser = decoded => {
   };
   
   // Log user Out
-export const logoutUser = ()=> {
+export const logoutUser = (dispatch, history = null)=> {
     // remove token from localstorage
     localStorage.removeItem(AUTH_TOKEN);
     // remove auth header for further request
     setAuthToken(false);
     // Set current user to {} which will set isAuthenticated to false
-    setCurrentUser({});
+    dispatch(setCurrentUser({}));
+    history && history.push('/login');
+
   };
