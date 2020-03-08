@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import jwt_decode from "jwt-decode";
 import store from './root.store';
+
+//Types import
+import { AUTH_TOKEN } from './actions/types';
+
+//Actions import
+import {logoutUser, setCurrentUser} from './actions/authAction';
+
+//Utility function import
+
+import setAuthToken from './utils/setAuthToken';
 
 
 // component import
@@ -27,7 +38,23 @@ import CreateService from '../src/pages/services/CreateService';
 import UpdateService from '../src/pages/services/UpdateService';
 
 import {PrivateRoute} from './common/PrivateRoute';
-import {PublicRoute} from './common/PublicRoute';
+
+if (localStorage[AUTH_TOKEN]) {
+  // Set auth token header auth
+  setAuthToken(localStorage[AUTH_TOKEN]);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(localStorage[AUTH_TOKEN]);
+
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+
+  // Check for expired Token
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    store.dispatch(logoutUser());
+    window.location.href = "/";
+  }
+}
 
 
 
@@ -37,17 +64,10 @@ const App = () => {
         <Router>
            <Header/>
 
-              <Switch>
-                <PublicRoute path={`${process.env.PUBLIC_URL}/login`} component={Login} />
-              </Switch>
-
-              <Switch>
-                <PublicRoute path={`${process.env.PUBLIC_URL}/forgot`} component={ForgotPassword} />
-              </Switch>
-
-              <Switch>
-                  <PublicRoute path={`${process.env.PUBLIC_URL}/register`} component={RegisterForm} />
-              </Switch>
+              
+                <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />              
+                <Route path={`${process.env.PUBLIC_URL}/forgot`} component={ForgotPassword} />
+                <Route path={`${process.env.PUBLIC_URL}/register`} component={RegisterForm} />
 
               <Switch>
                 <PrivateRoute exact path={`${process.env.PUBLIC_URL}/`} component={Home}/>
