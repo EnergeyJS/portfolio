@@ -16,7 +16,7 @@ const UpdateUser = (props) => {
     useEffect(() => {
         (async () => {
             try {
-                const { data } = await axios.get(`http://localhost:5050/api/users/${id}`);
+                const { data } = await axios.get(`/api/user/${id}`);
                 setUserName(data.name);
                 setUserAge(data.age);
             } catch (error) {
@@ -28,7 +28,7 @@ const UpdateUser = (props) => {
 
     const submit = async (e) => {
         e.preventDefault();
-        const user = await axios.put(`http://localhost:5050/api/users/${id}`, { name, age },
+        const user = await axios.put(`/api/user/${id}`, { name, age },
             {
                 headers: {
                     "Accept": "application/json",

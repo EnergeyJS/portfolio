@@ -1,19 +1,38 @@
 import axios from "axios";
 import {
-    LOGIN
+    LOGIN,
+    AUTH_TOKEN
 } from './types';
 
-export const login = async(dispatch, {email, password}) => {
+import setAuthToken from '../utils/setAuthToken';
+
+
+export const login = async(dispatch, {email, password}, history) => {
     try {
-        const response = await axios.post('http://localhost:5050/api/auth/login', {email, password});
+        const response = await axios.post('/api/auth/login', {email, password});
         const { data : {user, token} } = response;
-        localStorage.setItem('authToken', token);
-        dispatch({ 
-            type: LOGIN,
-            payload: user
-        })
-        window.location.href = "/";
-    } catch (error) {
+        localStorage.setItem(AUTH_TOKEN, token);
+        dispatch(setCurrentUser(user));
+        history && history.push('/');
+      } catch (error) {
         console.log(error);
     }
+  };
+
+
+  // Set logged in user
+export const setCurrentUser = decoded => {
+    return { type: LOGIN, payload: decoded };
+  };
+  
+  // Log user Out
+export const logoutUser = (dispatch, history = null)=> {
+    // remove token from localstorage
+    localStorage.removeItem(AUTH_TOKEN);
+    // remove auth header for further request
+    setAuthToken(false);
+    // Set current user to {} which will set isAuthenticated to false
+    dispatch(setCurrentUser({}));
+    history && history.push('/login');
+
   };

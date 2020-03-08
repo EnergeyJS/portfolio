@@ -1,21 +1,29 @@
-import React, { Component, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
+
 import {
     login,
-  } from '../../actions/authAction';
+} from '../../actions/authAction';
 
 
 export const Login = () =>  {
-
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const auth = useSelector(state => state.auth);
+    const history = useHistory();
     
     const dispatch = useDispatch();
 
+    useEffect(()=>{
+        auth.isAuthenticated && history.push('/');
+    }, [])
+
     const loginSubmit = (event) => {
         event.preventDefault();
-        login(dispatch, { email, password});
+        login(dispatch, { email, password}, history);
       };
 
         return (
