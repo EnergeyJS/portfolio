@@ -8,7 +8,7 @@ import setAuthToken from '../utils/setAuthToken';
 
 export const login = async(dispatch, {email, password}) => {
     try {
-        const response = await axios.post('http://localhost:5050/api/auth/login', {email, password});
+        const response = await axios.post('/api/auth/login', {email, password});
         const { data : {user, token} } = response;
         localStorage.setItem(AUTH_TOKEN, token);
         dispatch(setCurrentUser(user));
