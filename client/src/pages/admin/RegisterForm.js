@@ -1,7 +1,15 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
+const RegisterForm = () => {
 
-class RegisterForm extends Component {
-    render() {
+    const auth = useSelector(state => state.auth);
+    const history = useHistory();
+    
+    useEffect(()=>{
+        auth.isAuthenticated && history.push('/');
+    }, [])
+    
         return (
             <section className="register-area section-padding">
                 <div className="container">
@@ -42,6 +50,6 @@ class RegisterForm extends Component {
                 </div>
             </section>
         )
-    }
+    
 }
 export default RegisterForm

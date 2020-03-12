@@ -1,22 +1,29 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import {
-    storeNameAge,
-  } from '../../actions/dummyAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
-  import {
-    ADD_NAME_AGE,
-  } from '../../actions/types';
+import {
+    login,
+} from '../../actions/authAction';
+
 
 export const Login = () =>  {
     
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const auth = useSelector(state => state.auth);
+    const history = useHistory();
+    
     const dispatch = useDispatch();
 
-    const addingToCart = (event) => {
+    useEffect(()=>{
+        auth.isAuthenticated && history.push('/');
+    }, [])
+
+    const loginSubmit = (event) => {
         event.preventDefault();
-        dispatch({type: ADD_NAME_AGE, payload: {name: 'Joyonto',age: 24}});
-        // dispatch(storeNameAge({name: 'Joyonto',age: 24}));
+        login(dispatch, { email, password}, history);
       };
 
         return (
@@ -26,14 +33,14 @@ export const Login = () =>  {
                         <div className="col-lg-12 col-md-12">
                             <div className="login-form login-register-inner">
                                 <h3 className="pb-3">Login</h3>
-                                <form action="" onSubmit={addingToCart}>
+                                <form action="" onSubmit={loginSubmit}>
 
                                     <div className="form-group">
-                                        <input type="email" name="email" id="" className="form-control" placeholder="Email" />
+                                        <input onChange={e => setEmail(e.target.value)} value={email} type="email" name="email" id="" className="form-control" placeholder="Email" />
                                     </div>
 
                                     <div className="form-group">
-                                        <input type="password" name="password" id="" className="form-control" placeholder="Password" />
+                                        <input onChange={e => setPassword(e.target.value)} type="password" name="password" id="" className="form-control" placeholder="Password" />
                                     </div>
 
                                     <div className="form-group">

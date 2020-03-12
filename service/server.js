@@ -2,6 +2,9 @@
 const express = require('express');
 const app = express();
 const path = require("path");
+const logger = require('@skarif2/logger')
+
+app.use(logger())
 app.use(express.json());
 let cors = require('cors');
 app.use(cors());
@@ -10,7 +13,8 @@ const request = require('request');
 // require mongoose
 const mongoose = require('mongoose');
 // require router
-const userRoute = require('./routes/userRoute');
+const userRoute = require('./src/api/user/user.route');
+const authRoute = require('./src/api/auth/auth.route');
 const serviceRoute = require('./routes/serviceRoute');
 const teamRoute = require('./routes/teamMemberRoute');
 // import database file
@@ -33,10 +37,12 @@ app.use((req, res, next) => {
     }
 })()
 // get all data
-app.use('/api/users', userRoute);
+app.use('/api/user', userRoute);
+// get all data
+app.use('/api/auth', authRoute);
 app.use('/api/services', serviceRoute);
 app.use('/api/team', teamRoute);
 app.use('/image', express.static(path.join(__dirname, 'public')))
 app.listen(PORT, () => {
-    console.log('server running');
+    console.log('server running at port ', PORT);
 })

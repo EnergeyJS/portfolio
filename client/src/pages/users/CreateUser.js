@@ -4,17 +4,23 @@ import axios from 'axios';
 // file export
 import Button from "../../components/atoms/button/Button";
 import Input from "../../components/atoms/input/Input";
-import TextareaInput from "../../components/atoms/input/TextareaInput";
 
 import { createUser } from "../../api/user";
 
 const CreateUser = () => {
-    const [name, setUserName] = useState('');
-    const [age, setUserAge] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+    const [check, setCheck] = useState(false);
     const submit = async (e) => {
         e.preventDefault();
-        const user = createUser({ name, age })
+        const user = createUser({ username, name, email, password, check })
         console.log(user);
+    }
+
+    const checkUncheck = ()=>{
+        setCheck(!check)
     }
     return (
         <section className="pt-5 pb-5 content">
@@ -31,8 +37,12 @@ const CreateUser = () => {
 
                         <form onSubmit={submit}>
 
-                            <Input type="text" placeholder="User Name" onChange={setUserName} />
-                            <Input type="number" placeholder="User Age" onChange={setUserAge} />
+                            <Input type="text" placeholder="User Name" onChange={setUsername} />
+                            <Input type="text" placeholder="Email" onChange={setEmail} />
+                            <Input type="text" placeholder="Name" onChange={setName} />
+                            <Input type="password" placeholder="Password" onChange={setPassword} />
+                            <input name="check" type="checkbox" checked={check} onChange={checkUncheck} /> <label>Check</label>
+
                             <Button type="submit" value="Add User" />
 
                         </form>

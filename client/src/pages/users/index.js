@@ -9,7 +9,7 @@ const Home = () => {
 
     // delete user data
     const deleteUser = async (id) => {
-        const { data } = await axios.delete(`http://localhost:5050/api/users/${id}`);
+        const { data } = await axios.delete(`http://localhost:5050/api/user/${id}`);
         console.log(data);
         const remainingUser = users.filter(user => user._id !== data._id);
         setUsers(remainingUser);
@@ -18,7 +18,7 @@ const Home = () => {
     useEffect(() => {
         (async () => {
             try {
-                const { data } = await axios.get('http://localhost:5050/api/users');
+                const { data } = await axios.get('http://localhost:5050/api/user');
                 setUsers(data);
             } catch (error) {
                 console.log(error)
